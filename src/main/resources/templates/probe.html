@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyze your video</title>
+</head>
+<body>
+
+
+<form th:if="${!response}" style="margin: auto; display: block; text-align: center; "
+      method='post' enctype='multipart/form-data'>
+    <input type='file' name='video'>
+    <button>Analyze the video</button>
+</form>
+
+<div th:if="${response}">
+    <a href="/">Go back</a>
+    <h3>Format</h3>
+
+    <ul>
+        <div th:each="m : ${response.format}">
+            <td th:text="${m.key}"></td>
+            :
+            <td th:text="${m.value}"></td>
+        </div>
+    </ul>
+
+    <h3>Streams</h3>
+    <ul th:each="stream, iter : ${response.streams}">
+        <h4>
+            <div th:text="${iter.index}"></div>
+        </h4>
+        <div th:each="m : ${stream}">
+            <td th:text="${m.key}"></td>
+            :
+            <td th:text="${m.value}"></td>
+        </div>
+    </ul>
+
+    <div th:if="${response.error}">
+        <h3>Error</h3>
+        <div th:text="${response.error}"></div>
+    </div>
+
+    <!--        VideoMetaFetcher.probe.VideoProbe(format=VideoMetaFetcher.Format(longName=QuickTime / MOV, duration=58.390333, codec=null, bitrate=24630154, size=179770367), streams=[VideoMetaFetcher.Stream(duration=58.390333, width=2880, height=1800, displayAspectRatio=8:5, avgFrameRate=59 2399/3539, bitrate=24375798, maxBitrate=0, channels=0, bitsPerSample=0, hasBFrames=1, durationTs=350342, level=52, nalLength=4, pixFmt=yuv420p, sampleRate=0, sampleFormat=null, timeBase=1/6000, isAvc=true, startTime=0.0, startPts=0)], error=null)-->
+
+    <!--        <th:block th:each="smokeTest : ${response.streams}">-->
+    <!--            <tr>-->
+    <!--                <td th:text="${smokeTest.name}">A Smoke Test'</td>-->
+    <!--            </tr>-->
+    <!--        </th:block>-->
+
+</div>
+<!--<p>Result is: <span th:text="${response}"></span></p>-->
+</body>
+</html>
